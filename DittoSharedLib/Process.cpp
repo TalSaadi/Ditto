@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "stdafx.h"
 #include "Process.hpp"
 #include "WindowsException.hpp"
 
@@ -22,7 +22,7 @@ Process::~Process()
 }
 
 
-HANDLE Process::open_process(unsigned long pid) 
+HANDLE Process::open_process(unsigned long pid)
 {
 	HANDLE process_handle = OpenProcess(PROCESS_ACCESS, DONT_INHERIT_HANDLE, pid);
 
@@ -42,15 +42,15 @@ HANDLE Process::get_handle()
 Thread Process::create_remote_thread(LPTHREAD_START_ROUTINE start_address, void* parameters)
 {
 	HANDLE handle = CreateRemoteThread(
-						m_handle,
-						DEFAULT_THREAD_ATTRIBUTES,
-						DEFAULT_STACK_SIZE,
-						start_address,
-						parameters,
-						CREATION_FLAGS,
-						NO_THREAD_ID);
+		m_handle,
+		DEFAULT_THREAD_ATTRIBUTES,
+		DEFAULT_STACK_SIZE,
+		start_address,
+		parameters,
+		CREATION_FLAGS,
+		NO_THREAD_ID);
 
-	if (handle == NULL) 
+	if (handle == NULL)
 	{
 		throw WindowsException();
 	}
@@ -89,11 +89,11 @@ void Process::delete_process_memory(void * virtual_address)
 HANDLE Process::map_global_memory(const int value, const std::string& mapping_name)
 {
 	HANDLE map_handle = CreateFileMappingA(INVALID_HANDLE_VALUE,
-											nullptr,
-											PAGE_READWRITE, 
-											0,
-											sizeof(value),
-											mapping_name.c_str());
+		nullptr,
+		PAGE_READWRITE,
+		0,
+		sizeof(value),
+		mapping_name.c_str());
 
 	if (!map_handle)
 	{
@@ -118,7 +118,7 @@ HANDLE Process::map_global_memory(const int value, const std::string& mapping_na
 
 int Process::read_global_memory(const std::string & mapping_name)
 {
-	HANDLE map_handle = OpenFileMappingA(FILE_MAP_ALL_ACCESS, false, mapping_name.c_str());
+	HANDLE map_handle = OpenFileMappingA(FILE_MAP_READ, false, mapping_name.c_str());
 
 	if (!map_handle)
 	{

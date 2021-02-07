@@ -4,15 +4,15 @@
 
 constexpr unsigned long FORMAT_MESSAGE_FLAGS = (FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS);
 
-class WindowsException
+const class WindowsException
 {
 public:
-	WindowsException();
+	explicit WindowsException();
 	WindowsException(unsigned long error_code);
 	~WindowsException();
 
 public:
-	std::wstring what();
+	std::wstring what() const;
 
 private:
 	std::wstring get_error_message(unsigned long error_code);

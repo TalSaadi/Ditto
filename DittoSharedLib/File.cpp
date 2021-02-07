@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "stdafx.h"
 #include "File.hpp"
 
 File::File(const std::wstring & file_name) :
@@ -63,12 +63,12 @@ std::string File::read()
 HANDLE File::open_file(const std::wstring & file_name)
 {
 	HANDLE file_handle = CreateFileW(file_name.c_str(),
-										GENERIC_WRITE,	
-										0,
-										NULL,
-										OPEN_ALWAYS,
-										FILE_ATTRIBUTE_NORMAL,
-										NULL);
+		GENERIC_WRITE,
+		0,
+		NULL,
+		OPEN_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL);
 
 	if (file_handle == INVALID_HANDLE_VALUE)
 	{
@@ -82,7 +82,7 @@ void File::set_file_pointer(uint32_t move_method)
 {
 	unsigned long moved = SetFilePointer(_handle, 0l, nullptr, move_method);
 
-	if (moved == INVALID_SET_FILE_POINTER) 
+	if (moved == INVALID_SET_FILE_POINTER)
 	{
 		throw WindowsException();
 	}

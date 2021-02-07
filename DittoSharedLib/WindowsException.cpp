@@ -16,7 +16,7 @@ WindowsException::~WindowsException()
 {
 }
 
-std::wstring WindowsException::what()
+std::wstring WindowsException::what() const
 {
 	return error_message;
 }

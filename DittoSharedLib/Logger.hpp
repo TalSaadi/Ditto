@@ -34,7 +34,7 @@ private:
 
 private:
 	File log_file;
-	std::map<LevelsEnum, const wchar_t*> levels_map { { LevelsEnum::INFO_LEVEL, L"INFO" }, { LevelsEnum::WARNING_LEVEL, L"WARNING" }, { LevelsEnum::ERROR_LEVEL, L"ERROR" } };
+	std::map<LevelsEnum, const wchar_t*> levels_map{ { LevelsEnum::INFO_LEVEL, L"INFO" }, { LevelsEnum::WARNING_LEVEL, L"WARNING" }, { LevelsEnum::ERROR_LEVEL, L"ERROR" } };
 
 protected:
 	Logger();

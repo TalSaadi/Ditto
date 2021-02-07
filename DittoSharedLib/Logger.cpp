@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "stdafx.h"
 #include "Logger.hpp"
 
 
@@ -37,7 +37,7 @@ void Logger::write(LevelsEnum level, const std::wstring& content)
 	time(&tt);
 	localtime_s(&timeinfo, &tt);
 	wcsftime(buffer, 80, DATE_FORMAT, &timeinfo);
-	
+
 	log_file.write(buffer);
 	log_file.write(SEPERATOR);
 	log_file.write(levels_map[level]);

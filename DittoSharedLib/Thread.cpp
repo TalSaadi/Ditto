@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "stdafx.h"
 #include "Thread.hpp"
 
 
@@ -49,7 +49,7 @@ HANDLE Thread::create_thread(LPTHREAD_START_ROUTINE function, void* parameter)
 	{
 		throw WindowsException();
 	}
-	
+
 	return thread_handle;
 }
 
