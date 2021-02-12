@@ -3,7 +3,7 @@
 #include "File.hpp"
 
 
-IATHooking::IATHooking::IATHooking(const std::string& module, const std::string & function_name, void * hook) :
+IATHooking::IATHooking(const std::string& module, const std::string & function_name, void * hook) :
 	_iat_entry(nullptr),
 	_original_function(nullptr)
 {
@@ -49,7 +49,7 @@ IATHooking::IATHooking::IATHooking(const std::string& module, const std::string 
 	}
 }
 
-IATHooking::IATHooking::~IATHooking()
+IATHooking::~IATHooking()
 {
 	try
 	{
@@ -72,7 +72,7 @@ IATHooking::IATHooking::~IATHooking()
 	}
 }
 
-void * IATHooking::IATHooking::get_original_function()
+void * IATHooking::get_original_function()
 {
 	return _original_function;
 }

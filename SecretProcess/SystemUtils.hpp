@@ -5,12 +5,14 @@
 #include <Windows.h>
 #include <tlhelp32.h>
 #include <thread>
+#include <iostream>
 
 namespace SystemUtils
 {
 	constexpr wchar_t* TASK_MGR_EXE = L"Taskmgr.exe";
 	constexpr wchar_t* NOTEPAD_EXE = L"notepad.exe";
 	constexpr char* DLL_PATH = "D:\\Ditto\\SecretProcess\\x64\\Release\\HookingDll.dll";
+	constexpr char* HOOKS_DLL_PATH = "D:\\Ditto\\SecretProcess\\x64\\Release\\SystemHooks.dll";
 	constexpr char* HIDDEN_PID_NAME = "hidden_pid";
 
 	uint32_t get_process_id(const std::wstring& process_name);
