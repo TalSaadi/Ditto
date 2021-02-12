@@ -10,12 +10,12 @@ std::wstring BatteryUtils::ac_status()
 	{
 	case 0:
 		return L"Not plugged to AC";
-		break;
 	case 1:
 		return L"Plugged to AC";
-		break;
 	case 255:
 		return L"AC status is unkown";
+	default:
+		return L"Unknown";
 	}
 }
 
@@ -39,6 +39,8 @@ std::wstring BatteryUtils::get_battery_status()
 		return L"NO BATTERY";
 	case 255:
 		return L"Unkown battery status";
+	default:
+		return L"Uknown";
 	}
 }
 
@@ -59,6 +61,8 @@ std::wstring BatteryUtils::get_battery_saver()
 		return L"Battery saver is OFF";
 	case 1:
 		return L"Battery saver is ON";
+	default:
+		return L"Unknown";
 	}
 }
 
