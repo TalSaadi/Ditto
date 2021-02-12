@@ -12,6 +12,7 @@ public:
 
 public:
 	void write(const std::wstring& content);
+	void write(BYTE* bytes, size_t length);
 	std::string read();
 
 private:

