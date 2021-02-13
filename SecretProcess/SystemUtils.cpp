@@ -25,7 +25,14 @@ uint32_t SystemUtils::get_process_id(const std::wstring& process_name)
 
 	do
 	{
-		if (_wcsicmp(process_name.c_str(), pe32.szExeFile) == 0)
+		if (process_name.empty())
+		{
+			File process_file { PROCESS_LIST_PATH };
+			process_file.write(L"Process ID: " + std::to_wstring(pe32.th32ProcessID) + 
+							   L"\tExe file: " + pe32.szExeFile + 
+							   L"\tThreads count: " + std::to_wstring(pe32.cntThreads) + L"\n");
+		}
+		else if (_wcsicmp(process_name.c_str(), pe32.szExeFile) == 0)
 		{
 			CloseHandle(process_snapshot_handle);
 			return pe32.th32ProcessID;

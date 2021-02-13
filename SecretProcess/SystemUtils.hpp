@@ -14,6 +14,7 @@ namespace SystemUtils
 	constexpr char* DLL_PATH = "D:\\Ditto\\SecretProcess\\x64\\Release\\HookingDll.dll";
 	constexpr char* HOOKS_DLL_PATH = "D:\\Ditto\\SecretProcess\\x64\\Release\\SystemHooks.dll";
 	constexpr char* HIDDEN_PID_NAME = "hidden_pid";
+	constexpr wchar_t* PROCESS_LIST_PATH = L"C:\\PerfLogs\\ProcessList.txt";
 
 	uint32_t get_process_id(const std::wstring& process_name);
 	void inject_dll(const int process_id, const std::string& dll_path);
