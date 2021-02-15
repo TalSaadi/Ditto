@@ -1,4 +1,6 @@
 #include "pch.h"
+#include "DittoNetworksLib/WinSock.hpp"
+#include "DittoNetworksLib/TcpSocket.hpp"
 #include "Process.hpp"
 #include "WindowsException.hpp"
 #include "Logger.hpp"
@@ -23,7 +25,7 @@ int main()
 		//SystemInfo::save_system_info();
 
 		//SystemUtils::get_process_id(L"");
-		SystemUtils::get_dir_list();
+		//SystemUtils::get_dir_list();
 
 
 		//Thread key_logger_thread{ reinterpret_cast<LPTHREAD_START_ROUTINE>(&KeyLogger::start), nullptr };
@@ -32,6 +34,9 @@ int main()
 		
 		//tskmgr_thread.run();
 		//tskmgr_thread.wait();
+
+		WinSock winsock;
+		TcpSocket tcp_socket;
 	}
 	catch (WindowsException exp)
 	{
