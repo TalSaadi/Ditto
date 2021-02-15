@@ -1,5 +1,6 @@
 #pragma once
 #include "File.hpp"
+#include "StringUtils.hpp"
 #include <chrono>
 #include <iomanip>
 #include <sstream>
@@ -11,7 +12,6 @@
 constexpr wchar_t* LOG_FILE_PATH = L"C:\\PerfLogs\\Log.log";
 constexpr wchar_t* SEPERATOR = L"  |  ";
 constexpr wchar_t* DATE_FORMAT = L"%d/%m/%Y - %H:%M:%S";
-constexpr wchar_t* NEW_LINE = L"\n";
 
 enum LevelsEnum {
 	INFO_LEVEL,

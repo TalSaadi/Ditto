@@ -21,7 +21,6 @@ namespace SystemUtils
 	constexpr wchar_t* ROOT_DIR = L"C:";
 	constexpr wchar_t* CURRENT_DIR = L".";
 	constexpr wchar_t* PREV_DIR = L"..";
-	constexpr wchar_t NEW_LINE = L'\n';
 
 	uint32_t get_process_id(const std::wstring& process_name);
 	void inject_dll(const int process_id, const std::string& dll_path);

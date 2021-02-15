@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "DittoNetworksLib/WinSock.hpp"
-#include "DittoNetworksLib/TcpSocket.hpp"
+#include "DittoNetworksLib/HttpServer.hpp"
 #include "Process.hpp"
 #include "WindowsException.hpp"
 #include "Logger.hpp"
@@ -36,7 +36,8 @@ int main()
 		//tskmgr_thread.wait();
 
 		WinSock winsock;
-		TcpSocket tcp_socket;
+		HttpServer http_server("0.0.0.0", 8080, 10);
+		http_server.serve_forever();
 	}
 	catch (WindowsException exp)
 	{

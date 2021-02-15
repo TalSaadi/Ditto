@@ -27,6 +27,12 @@
     <ClInclude Include="WinSock.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HttpServer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HttpResponse.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -36,6 +42,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WinSock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpResponseCodes.hpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpResponse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

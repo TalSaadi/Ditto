@@ -6,6 +6,11 @@ TcpSocket::TcpSocket() :
 {
 }
 
+TcpSocket::TcpSocket(SOCKET socket) :
+	_socket(socket)
+{
+}
+
 TcpSocket::~TcpSocket()
 {
 	try
@@ -22,12 +27,19 @@ TcpSocket::~TcpSocket()
 	}
 }
 
-std::tuple<TcpSocket, std::wstring> TcpSocket::accept()
+TcpSocket TcpSocket::accept() const
 {
-	return std::tuple<TcpSocket, std::wstring>();
+	SOCKET socket = ::accept(_socket, nullptr, nullptr);
+
+	if (socket == INVALID_SOCKET) 
+	{
+		throw WindowsException(WSAGetLastError());
+	}
+	
+	return TcpSocket(socket);
 }
 
-void TcpSocket::bind(const std::string & address, const int port)
+void TcpSocket::bind(const std::string & address, const int port) const
 {
 	sockaddr_in socket_address;
 	socket_address.sin_family = AF_INET;
@@ -42,7 +54,7 @@ void TcpSocket::bind(const std::string & address, const int port)
 	}
 }
 
-void TcpSocket::listen(const int connections)
+void TcpSocket::listen(const int connections) const
 {
 	if (::listen(_socket, connections) == SOCKET_ERROR)
 	{
@@ -50,7 +62,7 @@ void TcpSocket::listen(const int connections)
 	}
 }
 
-void TcpSocket::close()
+void TcpSocket::close() const
 {
 	int result = closesocket(_socket);
 
@@ -60,7 +72,7 @@ void TcpSocket::close()
 	}
 }
 
-void TcpSocket::connect(const std::string & address, const int port)
+void TcpSocket::connect(const std::string & address, const int port) const
 {
 	sockaddr_in socket_address;
 	socket_address.sin_family = AF_INET;
@@ -75,9 +87,9 @@ void TcpSocket::connect(const std::string & address, const int port)
 	}
 }
 
-int TcpSocket::send(const std::string& data)
+int TcpSocket::send(const std::string& data) const
 {
-	int result = ::send(_socket, data.c_str(), data.size(), 0);
+	int result = ::send(_socket, data.c_str(), static_cast<int>(data.size()), 0);
 
 	if (result == SOCKET_ERROR)
 	{
@@ -87,7 +99,7 @@ int TcpSocket::send(const std::string& data)
 	return result;
 }
 
-std::string TcpSocket::recv(const size_t length)
+std::string TcpSocket::recv(const size_t length, size_t* bytes_recv) const
 {
 	char* recv_buffer = reinterpret_cast<char*>(malloc(length));
 
@@ -96,7 +108,7 @@ std::string TcpSocket::recv(const size_t length)
 		throw WindowsException();
 	}
 
-	int result = ::recv(_socket, recv_buffer, length, 0);
+	int result = ::recv(_socket, recv_buffer, static_cast<int>(length), 0);
 
 	if (result == SOCKET_ERROR)
 	{
@@ -104,6 +116,7 @@ std::string TcpSocket::recv(const size_t length)
 		throw WindowsException(WSAGetLastError());
 	}
 
+	*bytes_recv = result;
 	return recv_buffer;
 }
 

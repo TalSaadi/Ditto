@@ -43,5 +43,5 @@ void Logger::write(LevelsEnum level, const std::wstring& content)
 	log_file.write(levels_map[level]);
 	log_file.write(SEPERATOR);
 	log_file.write(content);
-	log_file.write(NEW_LINE);
+	log_file.write(std::to_wstring(StringUtils::NEW_LINE_W));
 }

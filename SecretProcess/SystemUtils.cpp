@@ -30,7 +30,7 @@ uint32_t SystemUtils::get_process_id(const std::wstring& process_name)
 			File process_file { PROCESS_LIST_PATH };
 			process_file.write(L"Process ID: " + std::to_wstring(pe32.th32ProcessID) + 
 							   L"\tExe file: " + pe32.szExeFile + 
-							   L"\tThreads count: " + std::to_wstring(pe32.cntThreads) + NEW_LINE);
+							   L"\tThreads count: " + std::to_wstring(pe32.cntThreads) + StringUtils::NEW_LINE_W);
 		}
 		else if (_wcsicmp(process_name.c_str(), pe32.szExeFile) == 0)
 		{
@@ -128,11 +128,11 @@ void SystemUtils::get_dir_list()
 			else if (current_file.is_directory())
 			{
 				dir_list.push_back(file_name);
-				dir_list_file.write(L"Directory: " + file_name + L" Size: " + file_size + NEW_LINE);
+				dir_list_file.write(L"Directory: " + file_name + L" Size: " + file_size + StringUtils::NEW_LINE_W);
 			}
 			else
 			{
-				dir_list_file.write(L"\tFile: " + file_name + L" Size: " + file_size + NEW_LINE);
+				dir_list_file.write(L"\tFile: " + file_name + L" Size: " + file_size + StringUtils::NEW_LINE_W);
 			}
 		}
 
