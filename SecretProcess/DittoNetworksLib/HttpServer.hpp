@@ -2,13 +2,12 @@
 #include "TcpSocket.hpp"
 #include "StringUtils.hpp"
 #include "HttpResponse.hpp"
+#include "HttpRequest.hpp"
+#include "Logger.hpp"
 #include <tuple>
 #include <vector>
 
 constexpr int BUFFER_SIZE = 4096;
-constexpr char* HTTP_NEW_LINE = "\r\n";
-constexpr uint16_t HEADERS_PART = 0;
-constexpr uint16_t DATA_PART = 1;
 
 const class HttpServer
 {
@@ -21,6 +20,10 @@ public:
 
 private:
 	void handle_request(const TcpSocket& socket, const std::string& request);
+	void handle_get_request(const TcpSocket& socket, const HttpRequest& http_request) const;
+	void handle_post_request(const TcpSocket& socket, const HttpRequest& http_request) const;
+	void handle_put_request(const TcpSocket& socket, const HttpRequest& http_request) const;
+	void handle_delete_request(const TcpSocket& socket, const HttpRequest& http_request) const;
 
 private:
 	const std::string address;

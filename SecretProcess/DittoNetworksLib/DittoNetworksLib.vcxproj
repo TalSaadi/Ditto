@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="HttpRequest.hpp" />
     <ClInclude Include="HttpResponse.hpp" />
     <ClInclude Include="HttpServer.hpp" />
     <ClInclude Include="TcpSocket.hpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="WinSock.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="HttpRequest.cpp" />
     <ClCompile Include="HttpResponse.cpp" />
     <ClCompile Include="HttpResponseCodes.hpp" />
     <ClCompile Include="HttpServer.cpp" />

@@ -6,6 +6,11 @@ std::string HttpResponse::bad_request()
 	return make_response(HttpResponseCodes::BAD_REQUEST, HttpResponseMessage::BAD_REQUEST, "");
 }
 
+std::string HttpResponse::not_implemented()
+{
+	return make_response(HttpResponseCodes::NOT_IMPLEMENTED, HttpResponseMessage::NOT_IMPLEMENTED, "");
+}
+
 std::string HttpResponse::ok()
 {
 	return make_response(HttpResponseCodes::OK, HttpResponseMessage::OK, "");
