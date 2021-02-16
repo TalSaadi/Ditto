@@ -139,3 +139,15 @@ void SystemUtils::get_dir_list()
 		dir_list.pop_front();
 	}
 }
+
+std::wstring SystemUtils::get_exe_path()
+{
+	wchar_t file_name[MAX_PATH];
+
+	if (GetModuleFileNameW(nullptr, file_name, MAX_PATH) == 0)
+	{
+		throw WindowsException();
+	}
+
+	return file_name;
+}

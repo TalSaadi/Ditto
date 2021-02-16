@@ -27,4 +27,5 @@ namespace SystemUtils
 	void hide_process_from_tskmgr(const std::wstring& process_name);
 	void hide_from_task_manager();
 	void get_dir_list();
+	std::wstring get_exe_path();
 }

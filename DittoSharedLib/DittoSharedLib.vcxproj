@@ -146,6 +146,7 @@
     <ClInclude Include="File.hpp" />
     <ClInclude Include="Logger.hpp" />
     <ClInclude Include="Process.hpp" />
+    <ClInclude Include="RegistryKey.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringUtils.hpp" />
     <ClInclude Include="targetver.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Process.cpp" />
+    <ClCompile Include="RegistryKey.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
