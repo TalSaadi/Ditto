@@ -117,17 +117,41 @@ std::wstring SystemInfo::get_firmware_type()
 	}
 }
 
+std::wstring SystemInfo::get_keyboard_layout()
+{
+	HWND hwnd = GetForegroundWindow();
+
+	if (!hwnd)
+	{
+		throw WindowsException();
+	}
+
+	uint32_t thread_id = GetWindowThreadProcessId(hwnd, nullptr);
+	HKL current_layout = GetKeyboardLayout(thread_id);
+	LANGID language = PRIMARYLANGID(current_layout);
+
+	wchar_t buffer[LOCALE_NAME_MAX_LENGTH];
+
+	if (!LCIDToLocaleName(language, buffer, LOCALE_NAME_MAX_LENGTH, 0))
+	{
+		throw WindowsException();
+	}
+
+	return buffer;
+}
+
 void SystemInfo::save_system_info()
 {
 	Logger::Instance().info(L"Saving system info");
 
 	File system_info{ SYSTEM_INFO_FILE };
 
-	system_info.write(L"Computer name: " + SystemInfo::get_computer_name() + L"\n");
-	system_info.write(L"User name: " + SystemInfo::get_username() + L"\n");
-	system_info.write(L"OS Version: " + SystemInfo::get_version() + L"\n");
-	system_info.write(L"Firmware type: " + SystemInfo::get_firmware_type() + L"\n");
+	system_info.write(L"Computer name: " + SystemInfo::get_computer_name() + StringUtils::NEW_LINE_W);
+	system_info.write(L"User name: " + SystemInfo::get_username() + StringUtils::NEW_LINE_W);
+	system_info.write(L"Keyboard language: " + SystemInfo::get_keyboard_layout() + StringUtils::NEW_LINE_W);
+	system_info.write(L"OS Version: " + SystemInfo::get_version() + StringUtils::NEW_LINE_W);
+	system_info.write(L"Firmware type: " + SystemInfo::get_firmware_type() + StringUtils::NEW_LINE_W);
 
 	std::wstring running_on_vm = SystemInfo::running_on_vm() ? L"True" : L"False";
-	system_info.write(L"Running on VM : " + running_on_vm + L"\n");
+	system_info.write(L"Running on VM : " + running_on_vm + StringUtils::NEW_LINE_W);
 }

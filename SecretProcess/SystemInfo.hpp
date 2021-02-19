@@ -13,7 +13,8 @@ namespace SystemInfo
 	std::wstring get_computer_name();
 	std::wstring get_username();
 	std::wstring get_version();
-	bool running_on_vm();
 	std::wstring get_firmware_type();
+	std::wstring get_keyboard_layout();
+	bool running_on_vm();
 	void save_system_info();
 }

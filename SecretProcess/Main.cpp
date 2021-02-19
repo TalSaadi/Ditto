@@ -12,7 +12,7 @@ int main()
 
 		// Runtime
 
-		SystemUtils::safety_cover(true);
+		SystemUtils::safety_cover(false);
 	}
 	catch (const WindowsException& exp)
 	{
