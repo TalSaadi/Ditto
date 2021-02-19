@@ -9,7 +9,6 @@
 #include "BatteryUtils.hpp"
 #include "SystemInfo.hpp"
 #include "Screen.hpp"
-#include "RegistryKey.hpp"
 #include <exception>
 #include <iostream>
 #include <chrono>

